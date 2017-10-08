@@ -1,0 +1,27 @@
+##############################################
+# Syntax Coloring Map For SimpleMovingAverage
+##############################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+SimpleMovingAverage	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+clear   KEYWORD2
+update  KEYWORD2
+read    KEYWORD2
+average KEYWORD2
+length  KEYWORD2
+
+#######################################
+# Instances (KEYWORD2)
+#######################################
+
+#######################################
+# Constants (LITERAL1)
+#######################################
