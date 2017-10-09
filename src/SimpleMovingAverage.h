@@ -1,10 +1,10 @@
 #ifndef _SIMPLE_MOVING_AVERAGE_H
 #define _SIMPLE_MOVING_AVERAGE_H
 
-#include <cstdint>
-#include <cstddef>
+#include <stdint.h>
+#include <stddef.h>
 
-template <typename TYPE, std::size_t SIZE>
+template <typename TYPE, size_t SIZE>
 class SimpleMovingAverage {
 private:
   size_t valuesIndex;
@@ -29,7 +29,7 @@ public:
     }
   }
 
-  TYPE update(TYPE value) {
+  double update(TYPE value) {
     this->total -= this->values[this->valuesIndex];
     this->total += value;
     this->values[this->valuesIndex] = value;
@@ -39,15 +39,15 @@ public:
       this->usedLength++;
     }
 
-    return this->total / this->usedLength;
+    return this->total / (double)this->usedLength;
   }
 
   TYPE read(size_t index) {
     return this->values[index];
   }
 
-  TYPE average(void) {
-    return this->total / this->usedLength;
+  double average(void) {
+    return this->total / (double)this->usedLength;
   }
 
   size_t length(void) {
