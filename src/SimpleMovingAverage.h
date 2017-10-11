@@ -3,55 +3,63 @@
 
 #include <stdint.h>
 #include <stddef.h>
+#include <stdlib.h>
 
-template <typename TYPE, size_t SIZE>
 class SimpleMovingAverage {
 private:
-  size_t valuesIndex;
-  size_t usedLength;
-  TYPE total;
-  TYPE values[SIZE];
+  size_t _valuesIndex;
+  size_t _usedLength;
+  size_t _length;
+  double _total;
+  float* _values;
+
 
 public:
-  SimpleMovingAverage() {
+  SimpleMovingAverage(size_t length = 10) : _length(length) {
+    this->_values = new float[length];
+  }
+
+  ~SimpleMovingAverage() {
+    delete[] this->_values;
+  }
+
+  void begin(void) {
     this->clear();
   }
 
-  ~SimpleMovingAverage() {}
-
   void clear(void) {
-    this->valuesIndex = 0;
-    this->usedLength = 0;
-    this->total = 0;
+    this->_valuesIndex = 0;
+    this->_usedLength = 0;
+    this->_total = 0;
 
-    for(uint8_t i=0; i < SIZE; i++) {
-      this->values[i] = 0;
+    for(uint8_t i=0; i < this->_length; i++) {
+      this->_values[i] = 0;
     }
   }
 
-  double update(TYPE value) {
-    this->total -= this->values[this->valuesIndex];
-    this->total += value;
-    this->values[this->valuesIndex] = value;
+  double update(float value) {
+    this->_total -= this->_values[this->_valuesIndex];
+    this->_total += value;
+    this->_values[this->_valuesIndex] = value;
 
-    this->valuesIndex = (this->valuesIndex + 1) % SIZE;
-    if(this->usedLength < SIZE) {
-      this->usedLength++;
+    this->_valuesIndex = (this->_valuesIndex + 1) % this->_length;
+    if(this->_usedLength < this->_length) {
+      this->_usedLength++;
     }
 
-    return this->total / (double)this->usedLength;
+    return this->_total / (float)this->_usedLength;
   }
 
-  TYPE read(size_t index) {
-    return this->values[index];
+  float read(size_t index) {
+    return this->_values[index];
   }
 
-  double average(void) {
-    return this->total / (double)this->usedLength;
+  float average(void) {
+    return this->_total / (float)this->_usedLength;
   }
 
   size_t length(void) {
-    return SIZE;
+    return this->_length;
   }
 };
 

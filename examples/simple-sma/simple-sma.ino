@@ -1,15 +1,14 @@
 #include <SimpleMovingAverage.h>
 
-SimpleMovingAverage<double, 10> avg;
+SimpleMovingAverage avg;
 
 void setup() {
   Serial.begin(9600);
+  avg.begin();
 
-  Serial.println(avg.update(10));
-  Serial.println(avg.update(11));
-  Serial.println(avg.update(10));
-  Serial.println(avg.update(10));
-  Serial.println(avg.average());
+  for(uint8_t i = 0; i < 10; i++) {
+    Serial.println(avg.update(i));
+  }
 }
 
 void loop() {
